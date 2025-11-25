@@ -17,7 +17,7 @@ const Header = () => {
             <li>• Future Courses</li>
           </ul>
         </div>
-        <div className="flex space-x-2">
+        <div className="flex space-x-4 justify-center">
           <button className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 px-4 py-2.5 rounded-xl font-semibold text-white">
             Explore Internships
           </button>

@@ -2,16 +2,18 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div>
+    <div className="bg-blue-950">
       <div>
-        <h2>TecHub</h2>
+        <h2 className="text-4xl font-extrabold bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+          TecHub
+        </h2>
         <p>Address xyz.</p>
         <p>TecHub@gmail.com</p>
         <p>+92 xxxxxxxxxxx</p>
       </div>
       <div>
         <div>
-          <h3>Quick Link</h3>
+          <h3 className="text-white font-semibold text-xl">Quick Link</h3>
           <ul>
             <li>Home</li>
             <li>About</li>
@@ -21,7 +23,7 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <h3>Legal</h3>
+          <h3 className="text-white font-semibold text-xl">Legal</h3>
           <ul>
             <li>Privacy Policy</li>
             <li>Terms & Condition</li>
@@ -29,7 +31,7 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <h3>Trusted References</h3>
+          <h3 className="text-white font-semibold text-xl">Trusted References</h3>
           <ul>
             <li>HEC</li>
             <li>Digital Pakistan</li>
@@ -40,9 +42,9 @@ const Footer = () => {
         </div>
       </div>
       <div>
-        <h6>NewsLetter</h6>
+        <h6 className="text-white font-semibold text-xl">NewsLetter</h6>
         <p>
-          Subscribe to get the latest updates, offers, and news from Syntecxhub.
+          Subscribe to get the latest updates, offers, and news from TecHub
         </p>
         <div>
           <input type="text" />
@@ -53,13 +55,49 @@ const Footer = () => {
         <p>Follow Us</p>
         <ul>
           <li>
-            <a href=""></a>
+            <a href="">
+              <svg
+                fill="#000000"
+                width="24px"
+                height="24px"
+                viewBox="-3 0 19 19"
+                xmlns="http://www.w3.org/2000/svg"
+                class="cf-icon-svg"
+              >
+                <path d="M12.538 9.62a6.038 6.038 0 1 0-6.981 5.964v-4.22H4.023V9.62h1.534V8.29a2.13 2.13 0 0 1 2.28-2.349 9.285 9.285 0 0 1 1.352.118v1.486h-.762a.873.873 0 0 0-.984.943V9.62h1.675l-.268 1.746H7.443v4.22a6.04 6.04 0 0 0 5.095-5.966z" />
+              </svg>
+            </a>
           </li>
           <li>
-            <a href=""></a>
+            <a href="">
+              <svg
+                fill="#000000"
+                width="24px"
+                height="24px"
+                viewBox="0 0 256 256"
+                id="Flat"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M160,128a32,32,0,1,1-32-32A32.03667,32.03667,0,0,1,160,128Zm68-44v88a56.06353,56.06353,0,0,1-56,56H84a56.06353,56.06353,0,0,1-56-56V84A56.06353,56.06353,0,0,1,84,28h88A56.06353,56.06353,0,0,1,228,84Zm-52,44a48,48,0,1,0-48,48A48.05436,48.05436,0,0,0,176,128Zm16-52a12,12,0,1,0-12,12A12,12,0,0,0,192,76Z" />
+              </svg>
+            </a>
           </li>
           <li>
-            <a href=""></a>
+            <a href="">
+              <svg
+                width="24px"
+                height="24px"
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M3 1a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V3a2 2 0 00-2-2H3zm1.102 4.297a1.195 1.195 0 100-2.39 1.195 1.195 0 000 2.39zm1 7.516V6.234h-2v6.579h2zM6.43 6.234h2v.881c.295-.462.943-1.084 2.148-1.084 1.438 0 2.219.953 2.219 2.766 0 .087.008.484.008.484v3.531h-2v-3.53c0-.485-.102-1.438-1.18-1.438-1.079 0-1.17 1.198-1.195 1.982v2.986h-2V6.234z"
+                  fill="#000000"
+                />
+              </svg>
+            </a>
           </li>
         </ul>
       </div>
