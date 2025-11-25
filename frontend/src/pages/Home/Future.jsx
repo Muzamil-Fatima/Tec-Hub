@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
 const Future = () => {
   return (
-    <div>Future</div>
-  )
-}
+    <div>
+      Future
+      <h2></h2>
+    </div>
+  );
+};
 
-export default Future
+export default Future;

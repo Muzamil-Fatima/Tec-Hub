@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
 const Internship = () => {
   return (
-    <div>Internship</div>
-  )
-}
+    <div>
+      Internship
+      <h2></h2>
+    </div>
+  );
+};
 
-export default Internship
+export default Internship;

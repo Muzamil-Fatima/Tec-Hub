@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
 const Certificate = () => {
   return (
-    <div>Certificate</div>
-  )
-}
+    <div>
+      Certificate
+      <h2></h2>
+    </div>
+  );
+};
 
-export default Certificate
+export default Certificate;

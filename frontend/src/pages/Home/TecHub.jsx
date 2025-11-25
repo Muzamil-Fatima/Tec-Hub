@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
 const TecHub = () => {
   return (
-    <div>TecHub</div>
-  )
-}
+    <div>
+      TecHub
+      <h2></h2>
+    </div>
+  );
+};
 
-export default TecHub
+export default TecHub;

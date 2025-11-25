@@ -1,4 +1,6 @@
+import Footer from "./Components/Footer"
 import Navbar from "./Components/Navbar"
+import LandingPage from "./pages/Home/LandingPage"
 
 function App() {
 
@@ -6,6 +8,8 @@ function App() {
     <>
     <div className="text-black bg-white font">
       <Navbar />
+      <LandingPage />
+      <Footer />
     </div>
     </>
   )
