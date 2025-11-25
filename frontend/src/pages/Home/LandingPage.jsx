@@ -19,6 +19,10 @@ const LandingPage = () => {
       <Certificate />
       <Vision />
       <Question />
+      <p>
+        Still have questions? <span>Connect with us</span> — we’re happy to
+        help!
+      </p>
     </div>
   );
 };

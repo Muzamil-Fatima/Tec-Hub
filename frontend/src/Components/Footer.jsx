@@ -2,19 +2,18 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-blue-950">
-      <div>
-        <h2 className="text-4xl font-extrabold bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-          TecHub
-        </h2>
+    <div className="bg-gray-900 text-white p-10 space-y-10 font-medium">
+      <div className="space-y-2">
+        <h2 className="text-4xl font-extrabold mb-6 ">TecHub</h2>
         <p>Address xyz.</p>
-        <p>TecHub@gmail.com</p>
-        <p>+92 xxxxxxxxxxx</p>
+        <p>
+          <span>+92 XXXXXXXXXX</span>
+        </p>
       </div>
-      <div>
-        <div>
+      <div className="flex-col md:flex-row flex justify-between space-y-6 md:space-y-0 px-10">
+        <div className="space-y-2">
           <h3 className="text-white font-semibold text-xl">Quick Link</h3>
-          <ul>
+          <ul className="text-gray-500 ">
             <li>Home</li>
             <li>About</li>
             <li>Internship</li>
@@ -22,17 +21,19 @@ const Footer = () => {
             <li>FAQ</li>
           </ul>
         </div>
-        <div>
+        <div className="space-y-2">
           <h3 className="text-white font-semibold text-xl">Legal</h3>
-          <ul>
+          <ul className="text-gray-500">
             <li>Privacy Policy</li>
             <li>Terms & Condition</li>
             <li>Refund & Cancellation</li>
           </ul>
         </div>
-        <div>
-          <h3 className="text-white font-semibold text-xl">Trusted References</h3>
-          <ul>
+        <div className="space-y-2">
+          <h3 className="text-white font-semibold text-xl">
+            Trusted References
+          </h3>
+          <ul className="text-gray-500">
             <li>HEC</li>
             <li>Digital Pakistan</li>
             <li>XYZ</li>
@@ -41,19 +42,24 @@ const Footer = () => {
           </ul>
         </div>
       </div>
-      <div>
+      <div className="space-y-3">
         <h6 className="text-white font-semibold text-xl">NewsLetter</h6>
-        <p>
-          Subscribe to get the latest updates, offers, and news from TecHub
+        <p className="text-gray-500 ">
+          Subscribe to get the latest updates, offers, and news from TecHub.
         </p>
-        <div>
-          <input type="text" />
-          <button>Subscribe</button>
+        <div className="flex space-x-2">
+          <input
+            type="text"
+            className="px-1.5 w-3xs py-2 rounded-xl border-2"
+          />
+          <button className="bg-blue-700  px-4 py-2  rounded-xl ">
+            Subscribe
+          </button>
         </div>
       </div>
-      <div>
-        <p>Follow Us</p>
-        <ul>
+      <div className="space-y-3">
+        <p className="text-white font-semibold text-xl">Follow Us</p>
+        <ul className="flex flex-row space-x-3">
           <li>
             <a href="">
               <svg
@@ -103,7 +109,7 @@ const Footer = () => {
       </div>
       <hr />
       <div>
-        <p>@2025 Muzamil-Fatima. All right reserved</p>
+        <p className="text-center">@2025 Muzamil-Fatima. All right reserved</p>
       </div>
     </div>
   );
