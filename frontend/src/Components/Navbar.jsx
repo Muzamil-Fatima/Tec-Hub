@@ -2,7 +2,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <div className="flex flex-row mt-1.5 space-x-2.5 justify-between items-center px-6 py-4 border-b-2 border-gray-200">
+    <div className=" static flex flex-row mt-1.5 space-x-2.5 justify-between items-center px-6 py-4 border-b-2 border-gray-200">
       <h1 className="text-4xl font-extrabold bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
         TecHub
       </h1>
