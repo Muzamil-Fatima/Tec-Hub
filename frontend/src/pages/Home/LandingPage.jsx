@@ -19,8 +19,8 @@ const LandingPage = () => {
       <Certificate />
       <Vision />
       <Question />
-      <p>
-        Still have questions? <span>Connect with us</span> — we’re happy to
+      <p className="text-center m-8">
+        Still have questions? <span className="text-purple-600 font-bold">Connect with us</span> — we’re happy to
         help!
       </p>
     </div>
