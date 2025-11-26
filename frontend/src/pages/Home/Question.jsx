@@ -2,86 +2,98 @@ import React, { useState } from "react";
 
 const Question = () => {
   const [openIndex, setOpenIndex] = useState(null);
+
   const toggle = (i) => {
     setOpenIndex(openIndex === i ? null : i);
   };
-  const dropDown = [
-    {
-      question: "What is TecHub?",
-      answer:
-        "TecHub is a platform that offers internship training, software solutions, and future courses to empower individuals in the tech industry.",
-    },
-    {
-      question: "What is TecHub?",
-      answer:
-        "TecHub is a platform that offers internship training, software solutions, and future courses to empower individuals in the tech industry.",
-    },
-    {
-      question: "What is TecHub?",
-      answer:
-        "TecHub is a platform that offers internship training, software solutions, and future courses to empower individuals in the tech industry.",
-    },
-    {
-      question: "What is TecHub?",
-      answer:
-        "TecHub is a platform that offers internship training, software solutions, and future courses to empower individuals in the tech industry.",
-    },
-    {
-      question: "What is TecHub?",
-      answer:
-        "TecHub is a platform that offers internship training, software solutions, and future courses to empower individuals in the tech industry.",
-    },
-    {
-      question: "What is TecHub?",
-      answer:
-        "TecHub is a platform that offers internship training, software solutions, and future courses to empower individuals in the tech industry.",
-    },
-    {
-      question: "What is TecHub?",
-      answer:
-        "TecHub is a platform that offers internship training, software solutions, and future courses to empower individuals in the tech industry.",
-    },
-    {
-      question: "What is TecHub?",
-      answer:
-        "TecHub is a platform that offers internship training, software solutions, and future courses to empower individuals in the tech industry.",
-    },
-    {
-      question: "What is TecHub?",
-      answer:
-        "TecHub is a platform that offers internship training, software solutions, and future courses to empower individuals in the tech industry.",
-    },
-  ];
+ const dropDown = [
+  {
+    question: "What services does TecHub provide?",
+    answer:
+      "TecHub offers internship programs, software development services, career guidance, and upcoming professional tech courses.",
+  },
+  {
+    question: "How do I apply for an internship at TecHub?",
+    answer:
+      "You can apply directly through the TecHub website by filling out the internship application form. Our team will contact you if you’re shortlisted.",
+  },
+  {
+    question: "Are TecHub internships paid or unpaid?",
+    answer:
+      "TecHub offers both paid and unpaid internships depending on the program, duration, and skill level of the applicant.",
+  },
+  {
+    question: "Do I need prior experience to join TecHub?",
+    answer:
+      "No prior experience is required for beginner-friendly programs. However, some advanced tracks may require basic programming knowledge.",
+  },
+  {
+    question: "What technologies does TecHub focus on?",
+    answer:
+      "TecHub focuses on MERN Stack, Python, Data Science, UI/UX, mobile app development, cloud technologies, and more.",
+  },
+  {
+    question: "Will I receive a certificate after completing an internship?",
+    answer:
+      "Yes. TecHub provides an officially verified certificate after successfully completing the internship requirements.",
+  },
+  {
+    question: "Does TecHub offer remote learning options?",
+    answer:
+      "Yes. TecHub provides online training, remote internships, and virtual mentoring opportunities for learners worldwide.",
+  },
+  {
+    question: "How long are the internship programs at TecHub?",
+    answer:
+      "Internship duration varies from 4 to 12 weeks depending on the track and learning goals.",
+  },
+  {
+    question: "Does TecHub help with job placement?",
+    answer:
+      "Yes. TecHub assists students with resume building, LinkedIn optimization, mock interviews, and job recommendations.",
+  },
+];
+
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 p-6 ">
       <h2 className="text-4xl font-bold text-center">
         Frequently Asked Questions
       </h2>
-      <p className="text-gray-400 mb-14 text-center p-6">
+
+      <p className="text-gray-400 mb-14 text-center">
         Have doubts? We’ve got you covered. Here are the answers to the most
         common questions.
       </p>
-      {dropDown.map((item, index) => {
-        return (
-          <div key={index} className="gap-4">
-            <div className="flex justify-around bg-white" onClick={() => toggle(index)}>
-              <p>{item.question}</p>
-              <svg
-                fill="#9810fa"
-                width="24px"
-                height="24px"
-                viewBox="-6.5 0 32 32"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <title>dropdown</title>
-                <path d="M18.813 11.406l-7.906 9.906c-0.75 0.906-1.906 0.906-2.625 0l-7.906-9.906c-0.75-0.938-0.375-1.656 0.781-1.656h16.875c1.188 0 1.531 0.719 0.781 1.656z"></path>
-              </svg>
-            </div>
-            {openIndex === index && <p>{item.answer}</p>}
+
+      {dropDown.map((item, index) => (
+        <div key={index} className={`mb-4 bg-white p-4 rounded shadow w-10/12 m-auto transition-all duration-300 ${openIndex === index ? "border border-purple-500": "border border-transparent"}`}>
+          
+          {/* QUESTION */}
+          <div
+            className="flex justify-between items-center cursor-pointer"
+            onClick={() => toggle(index)}
+          >
+            <p className="font-medium">{item.question}</p>
+
+            <svg
+              width="24px"
+              height="24px"
+              viewBox="-6.5 0 32 32"
+              fill={openIndex === index ? "#9810fa" : "#000"}
+              className={`transition-transform duration-300 ${
+                openIndex === index ? "rotate-180" : "rotate-0"
+              }`}
+            >
+              <path d="M18.813 11.406l-7.906 9.906c-0.75 0.906-1.906 0.906-2.625 0l-7.906-9.906c-0.75-0.938-0.375-1.656 0.781-1.656h16.875c1.188 0 1.531 0.719 0.781 1.656z"></path>
+            </svg>
           </div>
-        );
-      })}
+
+          {/* ANSWER */}
+          {openIndex === index && (
+            <p className="mt-2 text-gray-600">{item.answer}</p>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

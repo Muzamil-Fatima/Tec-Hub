@@ -11,14 +11,14 @@ const Header = () => {
           </span>{" "}
         </h2>
         <div>
-          <ul className="flex flex-row text-xl text-gray-500">
+          <ul className="flex flex-row text-xl text-gray-500 text-center space-x-2 mb-2">
             <li>Software Solutions </li>
             <li>• Internship Training </li>
             <li>• Future Courses</li>
           </ul>
           
         </div>
-        <div className="flex space-x-4 justify-center">
+        <div className="flex space-x-4 justify-center ml-20">
           <button className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 px-4 py-2.5 rounded-xl font-semibold text-white">
             Explore Internships
           </button>
