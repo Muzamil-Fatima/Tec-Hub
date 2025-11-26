@@ -2,7 +2,7 @@ import React from "react";
 import tec from "../../../Images/AboutTec.png";
 const About = () => {
   return (
-    <div className="flex flex-row justify-around space-x-6 p-8">
+    <div className="flex flex-row justify-around space-x-6 p-8 mb-20">
       <div className="w-1/2 pt-6">
         <h2 className="text-4xl font-bold mb-6">
           About{" "}
