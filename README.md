@@ -1,3 +1,3 @@
 ## Preview
 
-![App Screenshot](fronted/Images/preview.png)
+![App Screenshot](frontend/Images/preview.png)
