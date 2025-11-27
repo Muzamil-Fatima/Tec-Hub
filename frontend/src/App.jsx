@@ -8,11 +8,11 @@ import Opportunity from "./pages/Internship/Opportunity";
 function App() {
   return (
     <>
-      <div className="text-black bg-white font">
+      <div className="text-black bg-white font m-0 p-0 box-border font pt-20">
         <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/about" element={AboutUs} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactInfo />} />
           <Route path="/internship" element={<Opportunity />} />
         </Routes>
