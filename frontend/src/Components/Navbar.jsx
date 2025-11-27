@@ -8,12 +8,12 @@ const Navbar = () => {
         TecHub
       </h1>
       <div>
-        <ul className="font-semibold flex flex-row ml-10 space-x-6 text-xl">
-          <li
-            className="flex flex-row items-center gap-1.5
-          hover:text-purple-600 cursor-pointer "
-          >
-            <Link to="/" className="flex flex-row items-center pb-1 relative group hover:underline">
+        <ul className="font-semibold flex flex-row ml-10 space-x-8 text-xl">
+          <li className="flex flex-row items-center gap-2 hover:text-purple-600 cursor-pointer ">
+            <Link
+              to="/"
+              className="flex flex-row items-center pb-1 relative group space-x-1.5"
+            >
               <svg
                 //   fill="#000000"
                 width="24px"
@@ -27,10 +27,17 @@ const Navbar = () => {
                 <path d="M18 18V7.132l-8-4.8-8 4.8V18h4v-2.75a4 4 0 1 1 8 0V18h4zm-6 2v-4.75a2 2 0 1 0-4 0V20H2a2 2 0 0 1-2-2V7.132a2 2 0 0 1 .971-1.715l8-4.8a2 2 0 0 1 2.058 0l8 4.8A2 2 0 0 1 20 7.132V18a2 2 0 0 1-2 2h-6z" />
               </svg>
               <span className=""> Home</span>
+              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-purple-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
             </Link>
           </li>
-          <li className="flex flex-row items-center gap-1.5">
-            <Link to="/about" className="flex flex-row items-center gap-1.5">
+          <li
+            className="flex flex-row items-center gap-1.5
+          hover:text-purple-600 cursor-pointer "
+          >
+            <Link
+              to="/about"
+              className="flex flex-row items-center pb-1 relative group space-x-1.5"
+            >
               <svg
                 width="24px"
                 height="24px"
@@ -60,12 +67,13 @@ const Navbar = () => {
                 </g>
               </svg>
               <span> About</span>
+              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-purple-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
             </Link>
           </li>
-          <li className="flex flex-row items-center gap-1.5">
+          <li className="flex flex-row items-center gap-1.5 hover:text-purple-600 cursor-pointer ">
             <Link
               to="/internship"
-              className="flex flex-row items-center gap-1.5"
+              className="flex flex-row items-center pb-1 relative group space-x-1.5"
             >
               <svg
                 fill="#000000"
@@ -77,11 +85,15 @@ const Navbar = () => {
                 <path d="M19,6H16V5a2,2,0,0,0-2-2H10A2,2,0,0,0,8,5V6H5A3,3,0,0,0,2,9v9a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V9A3,3,0,0,0,19,6ZM10,5h4V6H10ZM20,18a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V12.39L8.68,14A1.19,1.19,0,0,0,9,14h6a1.19,1.19,0,0,0,.32-.05L20,12.39Zm0-7.72L14.84,12H9.16L4,10.28V9A1,1,0,0,1,5,8H19a1,1,0,0,1,1,1Z" />
               </svg>
               <span> Internship</span>
+              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-purple-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
             </Link>
           </li>
 
-          <li className="font-semibold flex flex-row items-center gap-1.5 ml-10 text-xl hover:text-purple-600 hover:underline cursor-pointer">
-            <Link to="/contact" className="flex flex-row items-center gap-1.5">
+          <li className="flex flex-row items-center gap-1.5 hover:text-purple-600 cursor-pointer ">
+            <Link
+              to="/contact"
+              className="flex flex-row items-center pb-1 relative group space-x-1.5"
+            >
               <svg
                 fill="#000000"
                 width="28px"
@@ -94,6 +106,10 @@ const Navbar = () => {
                 <path d="M19 7h-14c-1.104 0-2 .896-2 2v9c0 1.104.896 2 2 2h14c1.104 0 2-.896 2-2v-9c0-1.104-.896-2-2-2zm-9.684 7.316l1.602 1.4c.305.266.691.398 1.082.398s.777-.133 1.082-.398l1.602-1.4-.037.037 3.646 3.646h-12.586l3.646-3.646-.037-.037zm-4.316 2.977v-6.753l3.602 3.151-3.602 3.602zm10.398-3.602l3.602-3.151v6.75l-3.602-3.599zm3.602-4.691v.21l-6.576 5.754c-.227.198-.621.198-.848 0l-6.576-5.754v-.21h14z" />
               </svg>
               <span>Contact Us</span>
+              <span
+                className="absolute left-0 bottom-0 w-full h-0.5 bg-purple-700 
+                   scale-x-0 group-hover:scale-x-100 transition-transform origin-left"
+              ></span>
             </Link>
           </li>
         </ul>
