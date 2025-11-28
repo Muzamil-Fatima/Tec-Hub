@@ -1,9 +1,26 @@
-import React from 'react'
-
+import React from "react";
+import Message from "./Message";
+import GetInTouch from "./GetInTouch";
 const ContactInfo = () => {
   return (
-    <div>ContactInfo</div>
-  )
-}
+    <div>
+      <div className="  bg-linear-to-r from-indigo-700 via-purple-800 to-pink-700 py-20 text-white">
+        <h6 className="text-4xl text-center font-extrabold m-6">
+          Get in <span className="text-yellow-500"> Touch</span>
+        </h6>
+        <p className="text-center">
+          Have questions, ideas, or want to work with us? We’d love to hear from
+          you.
+        </p>
+      </div>
+      <div className="bg-gray-100">
+        <Message />
+      </div>
+      <div>
+        <GetInTouch />
+      </div>
+    </div>
+  );
+};
 
-export default ContactInfo
+export default ContactInfo;
