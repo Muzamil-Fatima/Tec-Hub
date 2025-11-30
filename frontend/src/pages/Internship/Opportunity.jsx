@@ -16,11 +16,12 @@ const Opportunity = () => {
             Internship Opportunities
           </span>{" "}
         </h7>
-        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 rounded-lg shadow-lg shadow-purple-200">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 lg:px-12">
           {coursesData.map((course, index) => (
             <CourseCard key={index} course={course} />
           ))}
         </div>
+        <div className="h-32"></div>
       </div>
     </div>
   );

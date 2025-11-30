@@ -14,7 +14,8 @@
       "Hands-on real-world projects",
       "Version control with Git/GitHub",
       "Duration: 1 month"
-    ]
+    ],
+    "images": ["/images/WebDev.jpg"]
   },
   {
     "id": 2,
@@ -31,7 +32,8 @@
       "Build ML models with Scikit-learn",
       "Data cleaning and preprocessing",
       "Duration: 1.5 months"
-    ]
+    ],
+    "images": ["/images/DataScience.jpg"]
   },
   {
     "id": 3,
@@ -48,7 +50,8 @@
       "Understand design principles & accessibility",
       "Portfolio-building projects",
       "Duration: 1 month"
-    ]
+    ],
+    "images": ["/images/UiUx.jpg"]
   },
   {
     "id": 4,
@@ -65,7 +68,8 @@
       "Hands-on real-world app projects",
       "State management with Redux",
       "Duration: 1.5 months"
-    ]
+    ],
+    "images": ["/images/mobileApp.jpg"]
   },
   {
     "id": 5,
@@ -82,7 +86,8 @@
       "Learn tools like Wireshark & Kali Linux",
       "Understand security protocols & encryption",
       "Duration: 2 months"
-    ]
+    ],
+    "images": ["/images/Cybersecurity.jpg"]
   },
   {
     "id": 6,
@@ -99,7 +104,8 @@
       "Automate workflows with Jenkins",
       "Hands-on cloud projects",
       "Duration: 1.5 months"
-    ]
+    ],
+    "images": ["/images/Cloud_Computing.jpg"]
   },
   {
     "id": 7,
@@ -116,7 +122,8 @@
       "Train models using real datasets",
       "Learn model evaluation & optimization",
       "Duration: 2 months"
-    ]
+    ],
+    "images": ["/images/Ai.jpg"]
   },
   {
     "id": 8,
@@ -133,7 +140,8 @@
       "Hands-on project: NFT marketplace",
       "Interact with blockchain via Web3.js",
       "Duration: 1.5 months"
-    ]
+    ],
+    "images": ["/images/BlockChain.PNG"]
   },
   {
     "id": 9,
@@ -150,7 +158,8 @@
       "Create content for marketing channels",
       "Hands-on digital marketing projects",
       "Duration: 1 month"
-    ]
+    ],
+    "images": ["/images/Digital_Marketing.jpg"]
   },
   {
     "id": 10,
@@ -167,7 +176,8 @@
       "Deploy games on PC & mobile",
       "Hands-on game projects",
       "Duration: 2 months"
-    ]
+    ],
+    "images": ["/images/Game_Development.jpg"]
   },
   {
     "id": 11,
@@ -184,7 +194,8 @@
       "Integrate IoT with cloud platforms",
       "Hands-on IoT applications",
       "Duration: 1.5 months"
-    ]
+    ],
+    "images": ["/images/IOT.PNG"]
   },
   {
     "id": 12,
@@ -201,6 +212,7 @@
       "Simulate robotics in software",
       "Hands-on robotics projects",
       "Duration: 2 months"
-    ]
+    ],
+    "images": ["/images/Robotics.jpg"]
   }
 ]
