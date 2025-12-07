@@ -1,10 +1,16 @@
+import express from "express";
+import cors from "cors";
+import cookiesParser from "cookie-parser";
+import dotenv from "dotenv";
+import {connection} from "./config/database.js"
+import userRoutes from "./router/userRoutes.js"
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cookiesParser());
 app.use(express.urlencoded({ extended: true }));
-removeUnverifiedAccounts();
+// removeUnverifiedAccounts();
 
 // allow request
 app.use(
