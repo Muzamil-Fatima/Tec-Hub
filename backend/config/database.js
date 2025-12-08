@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
-
-export const connection = () => {
-  mongoose
-    .connect(process.env.MONGO_URI, { dbName: "TecHub" })
-    .then(() => {
-      console.log("Connected to database.");
-    })
-    .catch((err) => {
-      console.log(`Some error occurred while connection to database: ${err}`);
-    });
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(`MongoDB connection error: ${error.message}`);
+    process.exit(1);
+  }
 };
+export default connectDB;

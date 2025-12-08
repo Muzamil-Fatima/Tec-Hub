@@ -2,14 +2,23 @@ import express from "express";
 import cors from "cors";
 import cookiesParser from "cookie-parser";
 import dotenv from "dotenv";
-import {connection} from "./config/database.js"
-import userRoutes from "./router/userRoutes.js"
-dotenv.config();
 
+//Files
+import connectDB from "./config/database.js";
+import userRoutes from "./router/userRoutes.js";
+import authRouter from "./router/authRoutes.js";
+
+//Configuration
+dotenv.config();
+connectDB();
+
+//Building Server
 const app = express();
+
+//Middleware
 app.use(express.json());
-app.use(cookiesParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookiesParser());
 // removeUnverifiedAccounts();
 
 // allow request
@@ -23,10 +32,10 @@ app.use(
 
 // Routes
 app.use("/api/user", userRoutes);
+app.use("/api/auth", authRouter);
 
 // server listen
-const DATABASE_URL =
-  process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/TecHub";
 const port = process.env.PORT || 8000;
-connection(DATABASE_URL);
-app.listen(port, () => console.log(`Server listen on port ${port}`));
+app.listen(port, () => {
+  console.log(`Server listen on port ${port}`);
+});
