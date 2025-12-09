@@ -29,14 +29,19 @@ const userSchema = new mongoose.Schema(
     accountVerified: { type: Boolean, default: false },
     verificationCode: Number,
     verificationCodeExpire: Date,
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
+    resetToken: String,
+    resetTokenExpire: Date,
     verificationToken: String,
     profileImage: {
       type: String,
       required: false,
     },
     status: { type: String, enum: ["Finished", "Active"], default: "Active" },
+    role: {
+      type: String,
+      enum: ["doctor", "clinic", "patient"],
+      default: "patient",
+    },
   },
   { timestamps: true }
 );
