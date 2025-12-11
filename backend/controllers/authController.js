@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import asyncHandler from "../middleware/catchAsyncError.js";
 import generateToken from "../utils/sendToken.js";
+
 const signup = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -25,8 +26,10 @@ const signup = asyncHandler(async (req, res) => {
       email: newUser.email,
       isAdmin: newUser.isAdmin,
     });
-  } catch (error) {res.status(400);
-    throw new Error("Invalid User Data");}
+  } catch (error) {
+    res.status(400);
+    throw new Error("Invalid User Data");
+  }
 });
 
 const login = asyncHandler(async (req, res) => {});
