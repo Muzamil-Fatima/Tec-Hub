@@ -32,6 +32,31 @@ const signup = asyncHandler(async (req, res) => {
   }
 });
 
-const login = asyncHandler(async (req, res) => {});
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  const existingUsr = await User.findOne({ email });
+  if (existingUsr) {
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      existingUsr.password
+    );
+
+    if (isPasswordValid) {
+      createToken(res, existingUsr._id);
+
+      res.status(201).json({
+        _id: existingUsr._id,
+        username: existingUsr.username,
+        email: existingUsr.email,
+        isAdmin: existingUsr.isAdmin,
+      });
+    } else {
+      res.status(401).json({ message: "Invalid Password" });
+    }
+  } else {
+    res.status(401).json({ message: "User not found" });
+  }
+});
 
 export { signup, login };
