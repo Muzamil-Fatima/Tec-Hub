@@ -58,5 +58,12 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(401).json({ message: "User not found" });
   }
 });
-
-export { signup, login };
+// logout user
+const logoutCurrentUser = asyncHandler(async (req, res) => {
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+  res.status(200).json({ message: "Logout Successfully" });
+});
+export { signup, login, logoutCurrentUser };
