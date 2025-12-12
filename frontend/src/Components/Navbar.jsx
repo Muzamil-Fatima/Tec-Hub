@@ -106,12 +106,16 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="space-x-4">
-        <button className="border-purple-800 text-black border hover:bg-purple-600 rounded-2xl px-4 py-2 hover:text-white font-semibold cursor-pointer">
-          Login
-        </button>
-        <button className="bg-purple-600 hover:bg-transparent hover:border hover:border-purple-800 rounded-2xl px-4 py-2  text-white hover:text-purple-700 font-semibold cursor-pointer">
-          SignUp
-        </button>
+        <Link to="/login">
+          <button className="border-purple-800 text-black border hover:bg-purple-600 rounded-2xl px-4 py-2 hover:text-white font-semibold cursor-pointer">
+            Login
+          </button>
+        </Link>
+        <Link to="/signup">
+          <button className="bg-purple-600 hover:bg-transparent hover:border hover:border-purple-800 rounded-2xl px-4 py-2  text-white hover:text-purple-700 font-semibold cursor-pointer">
+            SignUp
+          </button>
+        </Link>
       </div>
     </div>
   );

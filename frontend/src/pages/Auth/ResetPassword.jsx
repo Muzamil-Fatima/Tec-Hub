@@ -1,0 +1,50 @@
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+
+const ResetPassword = () => {
+  const { token } = useParams(); // get token from URL
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleReset = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    // TODO: Call backend API with token
+    console.log({ token, password });
+  };
+
+  return (
+    <div className="flex justify-center items-center h-screen bg-gray-50">
+      <form
+        className="bg-white p-10 rounded-2xl shadow-lg w-96 space-y-6"
+        onSubmit={handleReset}
+      >
+        <h2 className="text-3xl font-bold text-center">Reset Password</h2>
+        <input
+          type="password"
+          placeholder="New Password"
+          className="w-full p-3 rounded-xl border border-gray-300 focus:border-purple-500 focus:outline-none"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Confirm New Password"
+          className="w-full p-3 rounded-xl border border-gray-300 focus:border-purple-500 focus:outline-none"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
+        <button className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90">
+          Reset Password
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default ResetPassword;
