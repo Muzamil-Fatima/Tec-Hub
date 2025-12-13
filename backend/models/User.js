@@ -1,13 +1,7 @@
 import mongoose from "mongoose";
 import mongooseSequence from "mongoose-sequence";
-import bcrypt from "bcrypt.js";
-import crypto from "crypto";
-import jwt from "jsonwebtoken";
-import Stream from "stream";
-import { profile } from "console";
-// create connection for plugin
-const connection = mongoose.connection;
-const AutoIncrement = mongooseSequence(mongoose);
+
+// const AutoIncrement = mongooseSequence(mongoose);
 
 // define the schema
 const userSchema = new mongoose.Schema(
@@ -16,15 +10,13 @@ const userSchema = new mongoose.Schema(
     name: { type: String, required: [true, "Name is required"] },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [true],
       minlength: [6, "Password must be 6 character long"],
-      select: false,
     },
     email: {
       type: String,
-      required: [true, "Password is required"],
-      minlength: [6, "Password must be 6 character long"],
-      select: false,
+       required: [true, "Email is required"],
+        unique: true,
     },
     accountVerified: { type: Boolean, default: false },
     verificationCode: Number,
@@ -45,7 +37,7 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+// userSchema.plugin(AutoIncrement, { inc_field: "userId", start_seq: 1 });
 // create Model
 const User = mongoose.model("User", userSchema);
 export default User;

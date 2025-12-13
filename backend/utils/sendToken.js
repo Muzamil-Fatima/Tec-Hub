@@ -6,7 +6,7 @@ const generateToken = (res, useId) => {
   });
 
   //   set JWT token in HTTP-only cookie
-  res.cookies("jwt", token, {
+  res.cookie("jwt", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV !== "development",
     sameSite: "strict",
