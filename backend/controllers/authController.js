@@ -2,7 +2,8 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import asyncHandler from "../middleware/catchAsyncError.js";
 import generateToken from "../utils/sendToken.js";
-
+import { welcomeEmail } from "../utils/emailTemplates.js";
+import sendEmail from "../utils/sendEmail.js";
 const signup = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -21,6 +22,13 @@ const signup = asyncHandler(async (req, res) => {
   const newUser = new User({ name, email, password: hashPassword });
   try {
     await newUser.save();
+    // send welcome email using template
+    await sendEmail({
+      to: newUser.email,
+      subject: "Welcome to TechHub",
+      text: `Hi ${newUser.name}, welcome to TecHub!`, // fallback text
+      html: welcomeEmail(newUser.name),
+    });
     generateToken(res, newUser._id);
     res.status(201).json({
       _id: newUser._id,
