@@ -41,7 +41,7 @@ const signup = asyncHandler(async (req, res) => {
     res.status(400).json({ message: error.message }); // send real error
   }
 });
-
+// login
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -53,7 +53,7 @@ const login = asyncHandler(async (req, res) => {
     );
 
     if (isPasswordValid) {
-      createToken(res, existingUsr._id);
+      generateToken(res, existingUsr._id);
 
       res.status(201).json({
         _id: existingUsr._id,
