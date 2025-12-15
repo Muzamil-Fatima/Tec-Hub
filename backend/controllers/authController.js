@@ -76,4 +76,8 @@ const logoutCurrentUser = asyncHandler(async (req, res) => {
   });
   res.status(200).json({ message: "Logout Successfully" });
 });
-export { signup, login, logoutCurrentUser };
+// forgot password
+const forgotPassword = asyncHandler(async(req,res)=>{
+
+})
+export { signup, login, logoutCurrentUser, forgotPassword };
