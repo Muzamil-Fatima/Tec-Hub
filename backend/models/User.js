@@ -15,14 +15,15 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-       required: [true, "Email is required"],
-        unique: true,
+      required: [true, "Email is required"],
+      unique: true,
     },
+    resetTokenExpire: Date,
+    resetToken: String,
+
     accountVerified: { type: Boolean, default: false },
     verificationCode: Number,
     verificationCodeExpire: Date,
-    resetToken: String,
-    resetTokenExpire: Date,
     verificationToken: String,
     profileImage: {
       type: String,
@@ -31,8 +32,8 @@ const userSchema = new mongoose.Schema(
     status: { type: String, enum: ["Finished", "Active"], default: "Active" },
     role: {
       type: String,
-      enum: ["doctor", "clinic", "patient"],
-      default: "patient",
+      enum: ["teacher", "student", "admin"],
+      default: "student",
     },
   },
   { timestamps: true }

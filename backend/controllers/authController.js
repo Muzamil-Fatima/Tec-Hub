@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import asyncHandler from "../middleware/catchAsyncError.js";
 import generateToken from "../utils/sendToken.js";
 import { welcomeEmail } from "../utils/emailTemplates.js";
@@ -77,7 +78,11 @@ const logoutCurrentUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Logout Successfully" });
 });
 // forgot password
-const forgotPassword = asyncHandler(async(req,res)=>{
-
-})
+const forgotPassword = asyncHandler(async (req, res) => {
+  const notExistUser = await User.findOne({ email });
+  if (notExistUser) {
+    res.status(400);
+    throw new Error("User does not exist");
+  }
+});
 export { signup, login, logoutCurrentUser, forgotPassword };
