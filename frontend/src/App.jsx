@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import LandingPage from "./pages/Home/LandingPage";
@@ -12,6 +13,20 @@ import VerifyEmail from "./pages/Auth/VerifyEmail";
 function App() {
   return (
     <>
+      <Toaster
+        position="top-right" 
+        gutter={12} 
+        containerClassName=""
+        toastOptions={{
+          duration: 4000, 
+          style: {
+            fontSize: "14px",
+            borderRadius: "8px",
+            background: "#333",
+            color: "#fff",
+          },
+        }}
+      />
       <div className="text-black bg-white font m-0 p-0 box-border font pt-20">
         <Navbar />
         <Routes>

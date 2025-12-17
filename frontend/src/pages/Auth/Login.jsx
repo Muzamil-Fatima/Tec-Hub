@@ -1,14 +1,41 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // TODO: Call backend API
-    console.log({ email, password });
+    try {
+      const res = await axios.post(
+        `http://localhost:8000/api/auth/login`,
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
+      toast.success(`${res.data.user.name} login successfully.`);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          name: res.data.user.name,
+          email: res.data.user.email,
+        })
+      );
+      // Redirect to home page
+      navigate("/");
+    } catch (error) {
+       console.error(error);
+      console.log(error.response);
+      toast.error(error.response?.data?.message || "Failed to login");
+    }
   };
 
   return (

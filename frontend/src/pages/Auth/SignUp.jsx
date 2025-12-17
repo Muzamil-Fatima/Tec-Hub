@@ -1,20 +1,36 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 const Signup = () => {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSignup = (e) => {
+  const navigate = useNavigate();
+  const handleSignup = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+    if (!name || !email || !password || !confirmPassword)
+      return toast.error("All fields are required");
+    if (password.length < 6)
+      return toast.error("Password must be at least 6 characters Long");
+    if (password !== confirmPassword)
+      return toast.error("Passwords do not match!");
+    try {
+      const res = await axios.post("http://localhost:8000/api/auth/",{
+        name, 
+        email,
+        password,
+      });
+      if(res.data.success){
+        toast.success(`Welcome ${name}!`)
+        localStorage.setItem("user", JSON.stringify({name, email}));
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
-    // TODO: Call backend API
-    console.log({ username, email, password });
   };
 
   return (
@@ -31,10 +47,10 @@ const Signup = () => {
         </h2>
         <input
           type="text"
-          placeholder="Username"
+          placeholder="name"
           className="w-full p-3 rounded-xl border border-gray-300 focus:border-purple-500 focus:outline-none"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
         />
         <input
