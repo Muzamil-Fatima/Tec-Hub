@@ -1,5 +1,5 @@
 import React from "react";
-import certificate from "../../../Images/certificate.png";
+import certificate from "../../../Images/Certificate.png";
 const Certificate = () => {
   return (
     <div className="flex justify-center flex-col items-center w-4xl m-auto">
