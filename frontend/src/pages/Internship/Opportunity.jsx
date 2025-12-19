@@ -1,7 +1,7 @@
 import React from "react";
 import Program from "./Program";
 import CourseCard from "./CourseCard";
-import coursesData from "./courses.json";
+import coursesData from "./Courses.json";
 
 const Opportunity = () => {
   return (
