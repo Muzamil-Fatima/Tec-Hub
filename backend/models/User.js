@@ -20,11 +20,11 @@ const userSchema = new mongoose.Schema(
     },
     resetTokenExpire: Date,
     resetToken: String,
-
     accountVerified: { type: Boolean, default: false },
-    verificationCode: Number,
-    verificationCodeExpire: Date,
     verificationToken: String,
+    verificationCodeExpire: Date,
+// ---------------------------------------
+    verificationCode: Number,
     profileImage: {
       type: String,
       required: false,

@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import asyncHandler from "../middleware/catchAsyncError.js";
 import generateToken from "../utils/sendToken.js";
-import { welcomeEmail } from "../utils/emailTemplates.js";
 import sendEmail from "../utils/sendEmail.js";
 import { verificationEmail } from "../utils/emailTemplates.js";
 // ------------------------------- signup
@@ -13,62 +12,63 @@ const signup = asyncHandler(async (req, res) => {
   if (!name || !email || !password) {
     throw new Error("Please provide all required fields");
   }
-  //   chk user already exists
+
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     res.status(400);
     throw new Error("User already exists");
   }
-  //    Hashing the password
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(password, salt);
-  const newUser = new User({ name, email, password: hashPassword });
-  try {
-    await newUser.save();
-    // send verification email
-    await sendEmail({
-      to: newUser.email,
-      subject: "Verify your email for TecHub",
-      text: `Hi ${newUser.name}, please verify your email by clicking the link: ${process.env.FRONTEND_URL}`,
-      html: verificationEmail(newUser.name),
-    });
 
-    generateToken(res, newUser._id);
-    res.status(201).json({
-      _id: newUser._id,
-      name: newUser.name,
-      email: newUser.email,
-      role: newUser.role,
-    });
-  } catch (error) {
-    // console.error("Signup error:", error); // debug
-    res.status(400).json({ message: error.message }); // send real error
-  }
-});
-// -------------------------- verifyEmail
-const verifyEmail = asyncHandler(async (req, res) => {
-  const { token } = req.body;
-  const hashToken = crypto.createHash("sha256").update(token).digest("hex");
-  const user = await User.findOne({
-    emailVerifiedToken: hashToken,
-    emailVerifiedExpire: { $gt: Date.now() },
+  const hashPassword = await bcrypt.hash(password, 10);
+
+  //  Generate random token
+  const verificationToken = crypto.randomBytes(32).toString("hex");
+
+  const newUser = await User.create({
+    name,
+    email,
+    password: hashPassword,
+    verificationToken,
+    verificationCodeExpire: Date.now() + 15 * 60 * 1000, // 15 minutes
   });
-  if (!user) {
-    throw new Error("Invalid or expired token");
-  }
-  user.isEmailVerified = true;
-  user.emailVerifiedToken = undefined;
-  user.emailVerifiedExpire = undefined;
-  await user.save();
-  // send welcome email using template
+
+  const verifyUrl = `${process.env.BACKEND_URL}/api/auth/verify/${verificationToken}`;
+
   await sendEmail({
     to: newUser.email,
-    subject: "Welcome to TechHub",
-    text: `Hi ${newUser.name}, welcome to TecHub!`, // fallback text
-    html: welcomeEmail(newUser.name),
+    subject: "Verify your email for TecHub",
+    html: verificationEmail(newUser.name, verifyUrl),
   });
-  res.status(200).json({ message: "Email verified successfully" });
+
+  //  Do NOT auto-login yet
+  res.status(201).json({
+    success: true,
+    message: "Signup successful! Check your email to verify your account.",
+  });
 });
+const verifyEmail = asyncHandler(async (req, res) => {
+  const { token } = req.params;
+
+  const user = await User.findOne({
+    verificationToken: token,
+    verificationCodeExpire: { $gt: Date.now() }, // check expiry
+  });
+
+  if (!user) {
+    return res
+      .status(400)
+      .json({ message: "Invalid or expired verification link" });
+  }
+
+  user.accountVerified = true;
+  user.verificationToken = undefined;
+  user.verificationCodeExpire = undefined;
+
+  await user.save();
+  //  Redirect to frontend home page
+  res.redirect(`${process.env.FRONTEND_URL}/?verified=true`);
+});
+
 // -------------------------------- login
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -112,43 +112,4 @@ const forgotPassword = asyncHandler(async (req, res) => {
     throw new Error("User does not exist");
   }
 });
-export { signup, login, logoutCurrentUser, forgotPassword };
-
-// export const forgetPassword = catchAsyncError(async (req, res, next) => {
-//   const user = await User.findOne({
-//     email: req.body.email,
-//     accountVerified: true,
-//   });
-
-//   if (!user) {
-//     return next(new ErrorHandler("User not found", 404));
-//   }
-
-//   // Generate 6-digit OTP
-//   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-//   user.resetPasswordOTP = otp;
-//   user.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 mins expiry
-//   await user.save({ validateBeforeSave: false });
-
-//   const message = `Your OTP for resetting password is: ${otp}\n\nThis OTP will expire in 15 minutes.\n\nIf you did not request this, please ignore.`;
-
-//   try {
-//     await sendEmail({
-//       email: user.email,
-//       subject: "Lenka Coach App - Password Reset OTP",
-//       message,
-//     });
-
-//     res.status(200).json({
-//       success: true,
-//       message: `OTP sent to ${user.email} successfully.`,
-//     });
-//   } catch (error) {
-//     user.resetPasswordOTP = undefined;
-//     user.resetPasswordExpire = undefined;
-//     await user.save({ validateBeforeSave: false });
-
-//     return next(new ErrorHandler("Cannot send OTP, please try again.", 500));
-//   }
-// });
+export { signup, login, logoutCurrentUser, forgotPassword, verifyEmail };

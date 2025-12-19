@@ -6,8 +6,7 @@ const VerifyEmail = () => {
 
   const handleVerify = (e) => {
     e.preventDefault();
-    // TODO: Call backend API to verify OTP
-    console.log({ otp });
+    
   };
 
   return (
