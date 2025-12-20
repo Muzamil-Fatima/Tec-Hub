@@ -54,10 +54,9 @@ export const verificationEmail = (name, verifyUrl) => {
     </div>
   `;
 };
-export const forgotPasswordEmail = (name, resetUrl) => {
+export const forgotPasswordEmail = (name, otp) => {
   return `
     <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.5; text-align: center; padding: 20px;">
-      
       <h1 
         style="
           font-size: 32px; 
@@ -72,30 +71,18 @@ export const forgotPasswordEmail = (name, resetUrl) => {
       
       <p style="font-size: 16px;">Hello <strong>${name}</strong>,</p>
       <p style="font-size: 16px; margin-bottom: 30px;">
-        You recently requested to reset your password. Click the link below to set a new password:
+        Your password reset OTP is:
       </p>
       
-      <a 
-        href="${resetUrl}" 
-        style="
-          display: inline-block;
-          padding: 12px 24px;
-          font-size: 18px;
-          font-weight: bold;
-          color: #fff;
-          background-color: #6366f1;
-          border-radius: 8px;
-          text-decoration: none;
-          margin-bottom: 30px;
-        ">
-        Reset Password
-      </a>
+      <h2 style="font-size: 28px; color: #6366f1; margin-bottom: 30px;">
+        ${otp}
+      </h2>
       
       <p style="font-size: 14px; color: #666;">
         If you did not request a password reset, please ignore this email.
       </p>
       <p style="font-size: 14px; color: #666;">
-        This link will expire in 15 minutes.
+        This OTP will expire in 15 minutes.
       </p>
 
       <br />
@@ -105,4 +92,3 @@ export const forgotPasswordEmail = (name, resetUrl) => {
     </div>
   `;
 };
-

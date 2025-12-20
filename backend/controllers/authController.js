@@ -4,7 +4,10 @@ import crypto from "crypto";
 import asyncHandler from "../middleware/catchAsyncError.js";
 import generateToken from "../utils/sendToken.js";
 import sendEmail from "../utils/sendEmail.js";
-import { verificationEmail } from "../utils/emailTemplates.js";
+import {
+  verificationEmail,
+  forgotPasswordEmail,
+} from "../utils/emailTemplates.js";
 // ------------------------------- signup
 const signup = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -104,12 +107,112 @@ const logoutCurrentUser = asyncHandler(async (req, res) => {
   });
   res.status(200).json({ message: "Logout Successfully" });
 });
-// ---------------------------------- forgot password
+// -------------------- Forgot Password --------------------
 const forgotPassword = asyncHandler(async (req, res) => {
-  const notExistUser = await User.findOne({ email });
-  if (!notExistUser) {
+  const { email } = req.body;
+  const user = await User.findOne({ email, accountVerified: true });
+
+  if (!user) {
     res.status(400);
-    throw new Error("User does not exist");
+    throw new Error("User does not exist or account not verified");
+  }
+
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  user.resetPasswordOTP = otp;
+  user.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 minutes
+  await user.save({ validateBeforeSave: false });
+
+  try {
+    await sendEmail({
+      to: user.email,
+      subject: "Password Reset OTP",
+      html: forgotPasswordEmail(user.name, otp),
+    });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: `OTP sent to ${user.email} successfully.`,
+      });
+  } catch (error) {
+    user.resetPasswordOTP = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+    res.status(500);
+    throw new Error("Failed to send OTP email");
   }
 });
-export { signup, login, logoutCurrentUser, forgotPassword, verifyEmail };
+
+// -------------------- Reset Password---------------------
+const resetPassword = asyncHandler(async (req, res) => {
+  const { otp, password } = req.body;
+  const user = await User.findOne({
+    resetPasswordOTP: otp,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+  if (!user) {
+    res.status(400);
+    throw new Error("Invalid or expired OTP");
+  }
+  user.password = password; // will be hashed by pre-save middleware
+  user.resetPasswordOTP = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+  sendToken(user, 200, "Password reset successful", res);
+});
+
+// -------------------- Resend Verification OTP
+const resendVerification = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+  if (user.accountVerified) {
+    res.status(400);
+    throw new Error("User already verified");
+  }
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  user.verificationOTP = otp;
+  user.verificationExpire = Date.now() + 15 * 60 * 1000;
+  await user.save({ validateBeforeSave: false });
+  await sendEmail({
+    to: user.email,
+    subject: "Resend Verification OTP",
+    text: `Your verification OTP is ${otp}. It is valid for 15 minutes.`,
+  });
+  res
+    .status(200)
+    .json({
+      success: true,
+      message: `OTP resent to ${user.email} successfully.`,
+    });
+});
+// -------------------- Verify OTP
+const verifyOtp = asyncHandler(async (req, res) => {
+  const { email, otp } = req.body;
+  const user = await User.findOne({
+    email,
+    resetPasswordOTP: otp.toString(),
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+  if (!user) {
+    res.status(400);
+    throw new Error("Invalid or expired OTP");
+  }
+  res
+    .status(200)
+    .json({ success: true, message: "OTP verified successfully." });
+});
+// ---------------------------------- export controllers
+export {
+  signup,
+  login,
+  logoutCurrentUser,
+  forgotPassword,
+  verifyEmail,
+  verifyOtp,
+  resetPassword,
+  resendVerification,
+};

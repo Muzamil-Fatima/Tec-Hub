@@ -18,13 +18,15 @@ const userSchema = new mongoose.Schema(
       required: [true, "Email is required"],
       unique: true,
     },
+    accountVerified: { type: Boolean, default: false },
     resetTokenExpire: Date,
     resetToken: String,
-    accountVerified: { type: Boolean, default: false },
     verificationToken: String,
     verificationCodeExpire: Date,
+    resetPasswordOTP: String,
+    resetPasswordExpire: Date,
 // ---------------------------------------
-    verificationCode: Number,
+    // verificationCode: Number,
     profileImage: {
       type: String,
       required: false,
