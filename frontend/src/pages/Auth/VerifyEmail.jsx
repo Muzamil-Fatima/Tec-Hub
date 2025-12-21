@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Utils/api.js";
 const VerifyEmail = (setStep, email) => {
-  const [otp, setOtp] = useState(["", "", "", "", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRef = useRef([]);
 
   const handleChange = (e, index) => {
@@ -55,7 +55,7 @@ const VerifyEmail = (setStep, email) => {
         <p className="text-center text-gray-500">
           Enter the OTP sent to your email
         </p>
-        <div>
+        <div className="flex justify-center gap-2">
           {otp.map((digit, index) => {
             return (
               <input
@@ -63,8 +63,9 @@ const VerifyEmail = (setStep, email) => {
                 value={digit}
                 type="text"
                 placeholder="X"
-                className="w-12 h-12 border-2 ml-2 text-center font-bold text-2xl p-3 rounded-xl border-gray-300 focus:border-purple-500 focus:outline-none"
+                className="w-12 h-12 border-2   p-0 text-center font-bold text-2xl rounded-xl border-gray-300 focus:border-purple-500 focus:outline-none"
                 required
+                ref={(el) => (inputRef.current[index] = el)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 onChange={(e) => handleChange(e, index)}
                 maxLength={1}
