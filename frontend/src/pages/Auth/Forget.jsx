@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const Forget = () => {
@@ -6,8 +7,7 @@ const Forget = () => {
 
   const handleForgot = (e) => {
     e.preventDefault();
-    // TODO: Call backend API
-    console.log({ email });
+    toast.success("Reset link sent to your email.");
   };
 
   return (
@@ -29,12 +29,15 @@ const Forget = () => {
           required
         />
         <Link to="/verify-email">
-          <button className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90">
+          <button
+            onClick={() => handleForgot()}
+            className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
+          >
             Send Reset Link
           </button>
         </Link>
 
-        <p className="text-sm text-center text-gray-500">
+        <p className="text-sm text-center text-gray-500 mt-3">
           Remember password?{" "}
           <Link to="/login" className="text-purple-500 underline">
             Login

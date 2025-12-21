@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../Utils/api.js";
+import { FcGoogle } from "react-icons/fc";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -81,6 +82,20 @@ const Login = () => {
             Sign Up
           </Link>
         </p>
+        {/* Divider */}
+        <div className="flex items-center gap-2">
+          <div className="flex-1 h-px bg-gray-300"></div>
+          <span className="text-sm text-gray-500">OR</span>
+          <div className="flex-1 h-px bg-gray-300"></div>
+        </div>
+        {/* Google Login UI */}
+        <button
+          type="button"
+          className="w-full flex items-center justify-center gap-3 border border-gray-300 py-3 rounded-xl font-semibold hover:bg-gray-50"
+        >
+          <FcGoogle size={22} />
+          Continue with Google
+        </button>
       </form>
     </div>
   );
