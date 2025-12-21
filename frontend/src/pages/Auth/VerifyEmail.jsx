@@ -1,12 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../Utils/api.js";
+const VerifyEmail = (setStep, email) => {
+  const [otp, setOtp] = useState(["", "", "", "", "", "", ""]);
+  const inputRef = useRef([]);
 
-const VerifyEmail = () => {
-  const [otp, setOtp] = useState("");
+  const handleChange = (e, index) => {
+    const value = e.target.value;
+    if (/^[0-9]?$/.test(value)) {
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+      // move to the next box
+      if (value && index < otp.length - 1) {
+        inputRef.current[index + 1].focus();
+      }
+    }
+  };
+  const handleKeyDown = (e, index) => {
+    if (e.key == "Backspace" && !otp[index] && index > 0) {
+      inputRef.current[index - 1].focus();
+    }
+  };
 
-  const handleVerify = (e) => {
-    e.preventDefault();
-    
+  const handleVerify = async () => {
+    const code = otp.join("");
+    if (code.length != 6) {
+      toast.error("Please enter a 6 digit code");
+      return;
+    }
+    try {
+      const response = await axios.post(`${BASE_URL}/api/verifyOtp`, {
+        otp: code,
+        email,
+      });
+      if (response.data.success) {
+        toast.success("OTP verify successfully");
+        setStep("reset");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Invalid or Expire OTP");
+    }
   };
 
   return (
@@ -19,16 +55,29 @@ const VerifyEmail = () => {
         <p className="text-center text-gray-500">
           Enter the OTP sent to your email
         </p>
-        <input
-          type="text"
-          placeholder="Enter OTP"
-          className="w-full p-3 rounded-xl border border-gray-300 focus:border-purple-500 focus:outline-none"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          required
-        />
+        <div>
+          {otp.map((digit, index) => {
+            return (
+              <input
+                key={index}
+                value={digit}
+                type="text"
+                placeholder="X"
+                className="w-12 h-12 border-2 ml-2 text-center font-bold text-2xl p-3 rounded-xl border-gray-300 focus:border-purple-500 focus:outline-none"
+                required
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                onChange={(e) => handleChange(e, index)}
+                maxLength={1}
+              />
+            );
+          })}
+        </div>
+
         <Link to="/">
-          <button className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90">
+          <button
+            onClick={handleVerify}
+            className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
+          >
             Verify
           </button>
         </Link>

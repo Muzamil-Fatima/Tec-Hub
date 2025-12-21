@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
+import { BASE_URL } from "../../Utils/api.js";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `http://localhost:8000/api/auth/login`,
+        `${BASE_URL}/api/auth/login`,
         {
           email,
           password,
@@ -32,7 +32,7 @@ const Login = () => {
       // Redirect to home page
       navigate("/");
     } catch (error) {
-       console.error(error);
+      console.error(error);
       console.log(error.response);
       toast.error(error.response?.data?.message || "Failed to login");
     }

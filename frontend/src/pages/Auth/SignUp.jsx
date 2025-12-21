@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../Utils/api.js";
 import axios from "axios";
 const Signup = () => {
   const [name, setName] = useState("");
@@ -18,14 +19,14 @@ const Signup = () => {
     if (password !== confirmPassword)
       return toast.error("Passwords do not match!");
     try {
-      const res = await axios.post("http://localhost:8000/api/auth/",{
-        name, 
+      const res = await axios.post(`${BASE_URL}/api/auth/`, {
+        name,
         email,
         password,
       });
-      if(res.data.success){
-        toast.success(`Welcome ${name}!`)
-        localStorage.setItem("user", JSON.stringify({name, email}));
+      if (res.data.success) {
+        toast.success(`Welcome ${name}!`);
+        localStorage.setItem("user", JSON.stringify({ name, email }));
         navigate("/");
       }
     } catch (error) {
