@@ -1,13 +1,34 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../../Utils/api.js";
+import axios from "axios";
 
-const Forget = () => {
-  const [email, setEmail] = useState("");
+const Forget = ({ setEmail }) => {
+  console.log("BASE_URL =>", BASE_URL);
 
-  const handleForgot = (e) => {
+  const [inputEmail, setInputEmail] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const handleForgot = async (e) => {
     e.preventDefault();
-    toast.success("Reset link sent to your email.");
+    if (loading) return;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(inputEmail)) {
+      toast.error("Invalid Email format!");
+      setIsValidEmail(false);
+      return;
+    }
+    try {
+      setLoading(true);
+      await axios.post(`${BASE_URL}/api/auth/forgot-password`, {
+        email: inputEmail,
+      });
+      setEmail(inputEmail);
+      toast.success("Reset link sent to your email.");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to send reset link");
+    }
   };
 
   return (
@@ -23,19 +44,24 @@ const Forget = () => {
         <input
           type="email"
           placeholder="Email"
-          className="w-full p-3 rounded-xl border border-gray-300 focus:border-purple-500 focus:outline-none"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          className={`w-full p-3 rounded-xl border border-gray-300 focus:border-purple-500 focus:outline-none  ${
+            isValidEmail === false
+              ? "border-red-500"
+              : isValidEmail === true
+              ? "border-white-500"
+              : "border-white-500"
+          }`}
+          value={inputEmail}
+          onChange={(e) => setInputEmail(e.target.value)}
           required
         />
-        <Link to="/verify-email">
-          <button
-            onClick={() => handleForgot()}
-            className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
-          >
-            Send Reset Link
-          </button>
-        </Link>
+
+        <button
+          disabled={loading}
+          className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
+        >
+          {loading ? "Sending..." : "Send OTP"}
+        </button>
 
         <p className="text-sm text-center text-gray-500 mt-3">
           Remember password?{" "}

@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Utils/api.js";
-const VerifyEmail = (setStep, email) => {
+const VerifyEmail = (email) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRef = useRef([]);
 
@@ -32,13 +32,12 @@ const VerifyEmail = (setStep, email) => {
       return;
     }
     try {
-      const response = await axios.post(`${BASE_URL}/api/verifyOtp`, {
+      const response = await axios.post(`${BASE_URL}/api/auth/verify-otp`, {
         otp: code,
         email,
       });
       if (response.data.success) {
         toast.success("OTP verify successfully");
-        setStep("reset");
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Invalid or Expire OTP");
