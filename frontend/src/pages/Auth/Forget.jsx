@@ -55,13 +55,14 @@ const Forget = ({ setEmail }) => {
           onChange={(e) => setInputEmail(e.target.value)}
           required
         />
-
-        <button
-          disabled={loading}
-          className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
-        >
-          {loading ? "Sending..." : "Send OTP"}
-        </button>
+        <Link to="/verify-email">
+          <button
+            disabled={loading}
+            className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
+          >
+            {loading ? "Sending..." : "Send OTP"}
+          </button>
+        </Link>
 
         <p className="text-sm text-center text-gray-500 mt-3">
           Remember password?{" "}
