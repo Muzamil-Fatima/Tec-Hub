@@ -3,10 +3,9 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../../Utils/api.js";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 const Forget = ({ setEmail }) => {
-  console.log("BASE_URL =>", BASE_URL);
-
+  const navigate = useNavigate();
   const [inputEmail, setInputEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,12 +24,14 @@ const Forget = ({ setEmail }) => {
         email: inputEmail,
       });
       setEmail(inputEmail);
-      toast.success("Reset link sent to your email.");
+      toast.success("OTP sent to your email");
+      navigate("/verify-email", { state: { email: inputEmail } });
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to send reset link");
+      toast.error(error.response?.data?.message || "Failed to send OTP");
+    } finally {
+      setLoading(false);
     }
   };
-
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <form
@@ -55,15 +56,12 @@ const Forget = ({ setEmail }) => {
           onChange={(e) => setInputEmail(e.target.value)}
           required
         />
-        <Link to="/verify-email">
-          <button
-            disabled={loading}
-            className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
-          >
-            {loading ? "Sending..." : "Send OTP"}
-          </button>
-        </Link>
-
+        <button
+          disabled={loading}
+          className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
+        >
+          {loading ? "Sending..." : "Send OTP"}
+        </button>
         <p className="text-sm text-center text-gray-500 mt-3">
           Remember password?{" "}
           <Link to="/login" className="text-purple-500 underline">
@@ -74,5 +72,4 @@ const Forget = ({ setEmail }) => {
     </div>
   );
 };
-
 export default Forget;

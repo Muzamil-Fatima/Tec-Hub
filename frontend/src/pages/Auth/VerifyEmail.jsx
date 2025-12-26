@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Utils/api.js";
-const VerifyEmail = (email) => {
+const VerifyEmail = ({ email }) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRef = useRef([]);
 
@@ -43,7 +43,6 @@ const VerifyEmail = (email) => {
       toast.error(error.response?.data?.message || "Invalid or Expire OTP");
     }
   };
-
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <form
