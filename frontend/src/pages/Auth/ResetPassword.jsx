@@ -1,19 +1,39 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-
+import axios from "axios";
+import toast from "react-hot-toast";
+import { BASE_URL } from "../../Utils/api";
+import { useNavigate, useLocation } from "react-router-dom";
 const ResetPassword = () => {
-  const { token } = useParams(); // get token from URL
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleReset = (e) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const resetToken = location.state?.resetToken; // get token from state
+  const handleReset = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+      return toast.error("Passwords do not match");
     }
-    // TODO: Call backend API with token
-    console.log({ token, password });
+    if (password.length < 6) {
+      return toast.error("Password must be at least 6 characters long");
+    }
+    if (password !== confirmPassword) {
+      return toast.error("Passwords do not match");
+    }
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/api/auth/reset-password`,
+        { password },
+        {
+          headers: { Authorization: `Bearer ${resetToken}` },
+          withCredentials: true,
+        }
+      );
+      toast.success(res.data.message || "Password reset successfully");
+      navigate("/login");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to reset password");
+    }
   };
 
   return (

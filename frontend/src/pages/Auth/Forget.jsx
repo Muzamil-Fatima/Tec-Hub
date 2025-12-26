@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { BASE_URL } from "../../Utils/api.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const Forget = ({ setEmail }) => {
+const Forget = () => {
   const navigate = useNavigate();
   const [inputEmail, setInputEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(null);
@@ -23,7 +23,6 @@ const Forget = ({ setEmail }) => {
       await axios.post(`${BASE_URL}/api/auth/forgot-password`, {
         email: inputEmail,
       });
-      setEmail(inputEmail);
       toast.success("OTP sent to your email");
       navigate("/verify-email", { state: { email: inputEmail } });
     } catch (error) {

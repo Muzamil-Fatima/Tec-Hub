@@ -3,10 +3,13 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Utils/api.js";
-const VerifyEmail = ({ email }) => {
+import { useLocation, useNavigate } from "react-router-dom";
+const VerifyEmail = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRef = useRef([]);
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email || "";
   const handleChange = (e, index) => {
     const value = e.target.value;
     if (/^[0-9]?$/.test(value)) {
@@ -24,25 +27,30 @@ const VerifyEmail = ({ email }) => {
       inputRef.current[index - 1].focus();
     }
   };
-
+  // VerifyEmail.js
   const handleVerify = async () => {
     const code = otp.join("");
-    if (code.length != 6) {
+    if (code.length !== 6) {
       toast.error("Please enter a 6 digit code");
       return;
     }
+
     try {
       const response = await axios.post(`${BASE_URL}/api/auth/verify-otp`, {
         otp: code,
         email,
       });
+
       if (response.data.success) {
-        toast.success("OTP verify successfully");
+        toast.success("OTP verified successfully");
+        const resetToken = response.data.resetToken; // temporary token
+        navigate("/reset-password", { state: { email, resetToken } });
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Invalid or Expire OTP");
+      toast.error(error.response?.data?.message || "Invalid or expired OTP");
     }
   };
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <form
@@ -80,6 +88,14 @@ const VerifyEmail = ({ email }) => {
             Verify
           </button>
         </Link>
+        <p className="text-sm text-center text-gray-500 mt-3">
+          Didn't receive token?{" "}
+          <button 
+          // onClick={handleResend} 
+          className="text-purple-500 underline">
+            Resend
+          </button>
+        </p>
       </form>
     </div>
   );
