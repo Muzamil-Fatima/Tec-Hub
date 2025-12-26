@@ -22,12 +22,12 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      toast.success(`${res.data.user.name} login successfully.`);
+      toast.success(`${res.data.name} login successfully.`);
       localStorage.setItem(
         "user",
         JSON.stringify({
-          name: res.data.user.name,
-          email: res.data.user.email,
+          name: res.data.name,
+          email: res.data.email,
         })
       );
       // Redirect to home page
