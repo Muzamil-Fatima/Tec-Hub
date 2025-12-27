@@ -161,30 +161,30 @@ const resetPassword = asyncHandler(async (req, res) => {
   await user.save();
   res.status(200).json({ success: true, message: "Password reset successful" });
 });
-// -------------------- Resend Verification OTP
-const resendVerification = asyncHandler(async (req, res) => {
+// -------------------- Resend password reset otp
+// Resend Reset Password OTP
+const resendResetPasswordOTP = asyncHandler(async (req, res) => {
   const { email } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email, accountVerified: true });
   if (!user) {
     res.status(404);
-    throw new Error("User not found");
+    throw new Error("User not found or not verified");
   }
-  if (user.accountVerified) {
-    res.status(400);
-    throw new Error("User already verified");
-  }
+
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  user.verificationOTP = otp;
-  user.verificationExpire = Date.now() + 15 * 60 * 1000;
+  user.resetPasswordOTP = otp;
+  user.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 minutes
   await user.save({ validateBeforeSave: false });
+
   await sendEmail({
     to: user.email,
-    subject: "Resend Verification OTP",
-    text: `Your verification OTP is ${otp}. It is valid for 15 minutes.`,
+    subject: "Password Reset OTP",
+    html: forgotPasswordEmail(user.name, otp),
   });
+
   res.status(200).json({
     success: true,
-    message: `OTP resent to ${user.email} successfully.`,
+    message: `Password reset OTP sent to ${user.email} successfully.`,
   });
 });
 // -------------------- Verify OTP
@@ -201,13 +201,11 @@ const verifyOtp = asyncHandler(async (req, res) => {
   }
   // OTP is valid, generate a token or allow password reset
   const token = generateToken(res, user._id); // sets cookies + return token
-  res
-    .status(200)
-    .json({
-      success: true,
-      message: "OTP verified successfully.",
-      resetToken: token,
-    });
+  res.status(200).json({
+    success: true,
+    message: "OTP verified successfully.",
+    resetToken: token,
+  });
 });
 // ---------------------------------- export controllers
 export {
@@ -218,5 +216,6 @@ export {
   verifyEmail,
   verifyOtp,
   resetPassword,
-  resendVerification,
+  resendResetPasswordOTP,
+  // resendVerification,
 };

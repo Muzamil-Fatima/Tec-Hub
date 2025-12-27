@@ -9,7 +9,9 @@ const VerifyEmail = () => {
   const inputRef = useRef([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const email = location.state?.email || "";
+  const email =
+    location.state?.email || localStorage.getItem("verifyEmail") || "";
+
   const handleChange = (e, index) => {
     const value = e.target.value;
     if (/^[0-9]?$/.test(value)) {
@@ -50,6 +52,28 @@ const VerifyEmail = () => {
       toast.error(error.response?.data?.message || "Invalid or expired OTP");
     }
   };
+  const handleResend = async () => {
+    if (!email) {
+      toast.error("Email not found. Please signup again.");
+      return;
+    }
+
+    try {
+      const res = await axios.post(`${BASE_URL}/api/auth/resend-reset-otp`, {
+        email,
+      });
+
+      if (res.data.success) {
+        toast.success("OTP sent again successfully.");
+
+        // Optional: clear old OTP inputs
+        setOtp(["", "", "", "", "", ""]);
+        inputRef.current[0]?.focus();
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to resend OTP");
+    }
+  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
@@ -80,19 +104,19 @@ const VerifyEmail = () => {
           })}
         </div>
 
-        <Link to="/">
-          <button
-            onClick={handleVerify}
-            className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
-          >
-            Verify
-          </button>
-        </Link>
+        <button
+          type="submit"
+          className="w-full bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
+        >
+          Verify
+        </button>
         <p className="text-sm text-center text-gray-500 mt-3">
           Didn't receive token?{" "}
-          <button 
-          // onClick={handleResend} 
-          className="text-purple-500 underline">
+          <button
+          type="button"
+            onClick={handleResend}
+            className="text-purple-500 underline cursor-pointer"
+          >
             Resend
           </button>
         </p>

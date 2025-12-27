@@ -24,6 +24,7 @@ const Forget = () => {
         email: inputEmail,
       });
       toast.success("OTP sent to your email");
+      localStorage.setItem("verifyEmail", inputEmail);
       navigate("/verify-email", { state: { email: inputEmail } });
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to send OTP");

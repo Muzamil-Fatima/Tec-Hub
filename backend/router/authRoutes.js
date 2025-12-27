@@ -8,7 +8,8 @@ import {
   verifyEmail,
   verifyOtp,
   resetPassword,
-  resendVerification,
+  // resendVerification,
+  resendResetPasswordOTP,
 } from "../controllers/authController.js";
 const router = express.Router();
 
@@ -20,7 +21,8 @@ router.get("/logout", logoutCurrentUser);
 router.post("/forgot-password", forgotPassword);
 router.post("/verify-otp", verifyOtp);
 router.post("/reset-password", resetPassword);
-router.post("/resend-verification", resendVerification);
+router.post("/resend-reset-otp", resendResetPasswordOTP);
+// router.post("/resend-verification", resendVerification);
 
 // your routes here
 export default router;
